@@ -1,7 +1,7 @@
 # Netlas
 World atlas network connection visualizer. 
 
-###TODO
+### TODO
    * Find an API that can handle a higher volume of requests
    * Create GUI:
       * Atlas
