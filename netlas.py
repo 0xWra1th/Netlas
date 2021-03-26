@@ -2,12 +2,50 @@
 #Author: 0xWraith
 #Date: 24/03/2021
 import psutil as ps
-import time, requests, json
+import time, requests, json, sys
 from geoip import geolite2
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 def main():
+	
+	# PyQt Setup
+	app = QApplication(sys.argv)
+	window = QWidget()
+	window.setMaximumSize(1080, 536)
+	window.setMinimumSize(1080, 536)
+	window.setWindowTitle('Netlas')
+	window.setWindowIcon(QIcon("assets/icon_01.png"))
+
+	#Adding Image
+	label = QLabel(window)
+	label.setPixmap(QPixmap('assets/world_map_1080.jpg'))
+
+	window.show()
+
+	sys.exit(app.exec_())
+
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    YELLOW = '\u001b[33m'
+    RED = '\u001b[31m'
+    MAGENTA = '\u001b[35m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def netCheck():
+
 	results = ps.net_connections()
 	count = 0
+	
 	while (True):
 		new = ps.net_connections()
 		if results != new:
@@ -32,34 +70,6 @@ def main():
 						else: 
 							print(f"{bcolors.RED}"+details["country"]+"("+details["city"]+"): "+str(curr))
 
-				#USING GEOIP
-				#match = geolite2.lookup(b'10.22.43.222')
-				#if match is not None:
-					#country = match.country
-					#if country == "South Africa":
-						#print(f"{bcolors.YELLOW}"+country+": "+str(curr)+"\n")
-					#elif country == "United States": 
-						#print(f"{bcolors.OKCYAN}"+country+": "+str(curr)+"\n")
-					#elif country == "France":
-						#print(f"{bcolors.OKGREEN}"+country+": "+str(curr)+"\n")
-					#else: 
-						#print(f"{bcolors.RED}"+country+": "+str(curr)+"\n")
-
-
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    YELLOW = '\u001b[33m'
-    RED = '\u001b[31m'
-    MAGENTA = '\u001b[35m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
 
 if __name__ == "__main__":
     main()
