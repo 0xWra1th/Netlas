@@ -7,3 +7,5 @@ World atlas network connection visualizer.
       * Atlas
       * Connection Animations
    * New connections input as stream?
+   * Dark Mode
+   * Accurate Auto-Scrolling, currently scrolls but not to the bottom.
