@@ -3,9 +3,11 @@
 #Date: 24/03/2021
 import psutil as ps
 import time, requests, json, sys
+import threading
 from geoip import geolite2
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 def main():
 	
@@ -27,57 +29,21 @@ def main():
 	#Adding Image
 	label = QLabel(window)
 	label.setPixmap(QPixmap('assets/world_map_1080.jpg'))
-	#netCheck()
+
 	window.show()
 
-	results = ps.net_connections()
-	count = 0
-	
-	#while (True):
-	new = ps.net_connections()
-	if results != new:
-		results = new
-	for ip in results:
-		if ip[4] != () and ip[4][0] != "::1" and ip[4][0] != "127.0.0.1":
-			count+=1
-			curr = str(ip[4][0])
-			time.sleep(2)
-
-			# USING API
-			response = requests.get("http://ip-api.com/json/"+str(curr)+"?fields=status,country,city,query")
-			if 'json' in response.headers.get('Content-Type'):
-				details = response.json()
-				if details["status"] == "success":
-					if details["country"] == "South Africa":
-						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
-					elif details["country"] == "United States": 
-						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
-					elif details["country"] == "France":
-						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
-					else: 
-						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
+	#Threading
+	loop = threading.Thread(target=netCheck, args=(text_area,))
+	loop.start();
 
 	sys.exit(app.exec_())
 
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    YELLOW = '\u001b[33m'
-    RED = '\u001b[31m'
-    MAGENTA = '\u001b[35m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-def netCheck():
+def netCheck(ta):
 	results = ps.net_connections()
 	count = 0
-	
+	scrollbar = ta.verticalScrollBar();
+
 	while (True):
 		new = ps.net_connections()
 		if results != new:
@@ -87,22 +53,24 @@ def netCheck():
 				count+=1
 				curr = str(ip[4][0])
 				time.sleep(2)
-
-				# USING API
+				#USING API
 				response = requests.get("http://ip-api.com/json/"+str(curr)+"?fields=status,country,city,query")
 				if 'json' in response.headers.get('Content-Type'):
 					details = response.json()
 					if details["status"] == "success":
 						if details["country"] == "South Africa":
-							print(f"{bcolors.YELLOW}"+details["country"]+"("+details["city"]+"): "+str(curr))
+							text = "<span style=\" font-size:12pt; font-weight:600; color:#000000;\" >"+details["country"]+", "+details["city"]+" -> "+str(curr)+":"+str(ip[4][1])+"</span>"
+							ta.append(text)
 						elif details["country"] == "United States": 
-							print(f"{bcolors.OKCYAN}"+details["country"]+"("+details["city"]+"): "+str(curr))
+							text = "<span style=\" font-size:12pt; font-weight:600; color:#0000ff;\" >"+details["country"]+", "+details["city"]+" -> "+str(curr)+":"+str(ip[4][1])+"</span>"
+							ta.append(text)
 						elif details["country"] == "France":
-							print(f"{bcolors.OKGREEN}"+details["country"]+"("+details["city"]+"): "+str(curr))
-						else: 
-							print(f"{bcolors.RED}"+details["country"]+"("+details["city"]+"): "+str(curr))
-	
-
+							text = "<span style=\" font-size:12pt; font-weight:600; color:#00ff00;\" >"+details["country"]+", "+details["city"]+" -> "+str(curr)+":"+str(ip[4][1])+"</span>"
+							ta.append(text)
+						else:
+							text = "<span style=\" font-size:12pt; font-weight:600; color:#ff0000;\" >"+details["country"]+", "+details["city"]+" -> "+str(curr)+":"+str(ip[4][1])+"</span>"
+							ta.append(text)
+						scrollbar.setValue(scrollbar.maximum())
 
 if __name__ == "__main__":
     main()
