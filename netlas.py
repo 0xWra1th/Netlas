@@ -12,19 +12,52 @@ def main():
 	# PyQt Setup
 	app = QApplication(sys.argv)
 	window = QWidget()
-	window.setMaximumSize(1080, 536)
-	window.setMinimumSize(1080, 536)
+	window.setMaximumSize(1080, 736)
+	window.setMinimumSize(1080, 736)
 	window.setWindowTitle('Netlas')
 	window.setWindowIcon(QIcon("assets/icon_01.png"))
+
+	#Text Output
+	text_area = QTextEdit(window)
+	text_area.move(0,536)
+	text_area.resize(1080,200)
+	text_area.setReadOnly(True)
+	text_area.setFrameStyle(QFrame.HLine)
 
 	#Adding Image
 	label = QLabel(window)
 	label.setPixmap(QPixmap('assets/world_map_1080.jpg'))
-
+	#netCheck()
 	window.show()
 
-	sys.exit(app.exec_())
+	results = ps.net_connections()
+	count = 0
+	
+	#while (True):
+	new = ps.net_connections()
+	if results != new:
+		results = new
+	for ip in results:
+		if ip[4] != () and ip[4][0] != "::1" and ip[4][0] != "127.0.0.1":
+			count+=1
+			curr = str(ip[4][0])
+			time.sleep(2)
 
+			# USING API
+			response = requests.get("http://ip-api.com/json/"+str(curr)+"?fields=status,country,city,query")
+			if 'json' in response.headers.get('Content-Type'):
+				details = response.json()
+				if details["status"] == "success":
+					if details["country"] == "South Africa":
+						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
+					elif details["country"] == "United States": 
+						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
+					elif details["country"] == "France":
+						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
+					else: 
+						text_area.append(details["country"]+"("+details["city"]+"): "+str(curr))
+
+	sys.exit(app.exec_())
 
 
 class bcolors:
@@ -42,7 +75,6 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def netCheck():
-
 	results = ps.net_connections()
 	count = 0
 	
@@ -69,6 +101,7 @@ def netCheck():
 							print(f"{bcolors.OKGREEN}"+details["country"]+"("+details["city"]+"): "+str(curr))
 						else: 
 							print(f"{bcolors.RED}"+details["country"]+"("+details["city"]+"): "+str(curr))
+	
 
 
 if __name__ == "__main__":
