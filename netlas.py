@@ -35,45 +35,55 @@ def main():
 	#Countries
 	ZA = QLabel(window)
 	ZA.setPixmap(QPixmap('assets/ZA.png'))
-	ZA.setVisible(True)
+	ZA.setVisible(False)
 
 	US = QLabel(window)
 	US.setPixmap(QPixmap('assets/US.png'))
-	US.setVisible(True)
+	US.setVisible(False)
 
 	UK = QLabel(window)
 	UK.setPixmap(QPixmap('assets/UK.png'))
-	UK.setVisible(True)
+	UK.setVisible(False)
 
 	FR = QLabel(window)
 	FR.setPixmap(QPixmap('assets/FR.png'))
-	FR.setVisible(True)
+	FR.setVisible(False)
 
 	AU = QLabel(window)
 	AU.setPixmap(QPixmap('assets/AU.png'))
-	AU.setVisible(True)
+	AU.setVisible(False)
 
 	BR = QLabel(window)
 	BR.setPixmap(QPixmap('assets/BR.png'))
-	BR.setVisible(True)
+	BR.setVisible(False)
 
 	CA = QLabel(window)
 	CA.setPixmap(QPixmap('assets/CA.png'))
-	CA.setVisible(True)
+	CA.setVisible(False)
 
 	CN = QLabel(window)
 	CN.setPixmap(QPixmap('assets/CN.png'))
-	CN.setVisible(True)
+	CN.setVisible(False)
 
 	IN = QLabel(window)
 	IN.setPixmap(QPixmap('assets/IN.png'))
-	IN.setVisible(True)
+	IN.setVisible(False)
 
 	RU = QLabel(window)
 	RU.setPixmap(QPixmap('assets/RU.png'))
-	RU.setVisible(True)
+	RU.setVisible(False)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU]
+	GR = QLabel(window)
+	GR.setPixmap(QPixmap('assets/GR.png'))
+	GR.setVisible(False)
+	GR.move(0,-64)
+
+	IR = QLabel(window)
+	IR.setPixmap(QPixmap('assets/IR.png'))
+	IR.setVisible(False)
+	IR.move(0,-64)
+
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR]
 
 
 	window.show()
@@ -83,6 +93,11 @@ def main():
 	loop.start();
 
 	sys.exit(app.exec_())
+
+def atlasLight(country):
+	country.setVisible(True)
+	time.sleep(2)
+	country.setVisible(False)
 
 def netCheck(ta, win, countries):
 	results = ps.net_connections()
@@ -110,8 +125,8 @@ def netCheck(ta, win, countries):
 				scrollbar.setValue(scrollbar.maximum())
 
 				#RESET MARKERS
-				for c in countries:
-					c.setVisible(False)
+				#for c in countries:
+					#c.setVisible(False)
 
 				#USING API
 				response = requests.get("http://ip-api.com/json/"+str(curr)+"?fields=status,country,city,query")
@@ -120,43 +135,63 @@ def netCheck(ta, win, countries):
 					if details["status"] == "success":
 						if details["country"] == "South Africa":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[0].setVisible(True)
+							ZAThread = threading.Thread(target=atlasLight, args=(countries[0],))
+							ZAThread.start();
 							ta.append(text)
 						elif details["country"] == "United States": 
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[1].setVisible(True)
+							USThread = threading.Thread(target=atlasLight, args=(countries[1],))
+							USThread.start();
 							ta.append(text)
 						elif details["country"] == "United Kingdom":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[2].setVisible(True)
+							UKThread = threading.Thread(target=atlasLight, args=(countries[2],))
+							UKThread.start();
 							ta.append(text)
 						elif details["country"] == "France":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[3].setVisible(True)
+							FRThread = threading.Thread(target=atlasLight, args=(countries[3],))
+							FRThread.start();
 							ta.append(text)
 						elif details["country"] == "Australia":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[4].setVisible(True)
+							AUThread = threading.Thread(target=atlasLight, args=(countries[4],))
+							AUThread.start();
 							ta.append(text)
 						elif details["country"] == "Brazil":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[5].setVisible(True)
+							BRThread = threading.Thread(target=atlasLight, args=(countries[5],))
+							BRThread.start();
 							ta.append(text)
 						elif details["country"] == "Canada":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[6].setVisible(True)
+							CAThread = threading.Thread(target=atlasLight, args=(countries[6],))
+							CAThread.start();
 							ta.append(text)
 						elif details["country"] == "China":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[7].setVisible(True)
+							CNThread = threading.Thread(target=atlasLight, args=(countries[7],))
+							CNThread.start();
 							ta.append(text)
 						elif details["country"] == "India":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[8].setVisible(True)
+							INThread = threading.Thread(target=atlasLight, args=(countries[8],))
+							INThread.start();
 							ta.append(text)
 						elif details["country"] == "Russia":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							countries[9].setVisible(True)
+							RUThread = threading.Thread(target=atlasLight, args=(countries[9],))
+							RUThread.start();
+							ta.append(text)
+						elif details["country"] == "Germany":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							GRThread = threading.Thread(target=atlasLight, args=(countries[10],))
+							GRThread.start();
+							ta.append(text)
+						elif details["country"] == "Ireland":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							IRThread = threading.Thread(target=atlasLight, args=(countries[11],))
+							IRThread.start();
 							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
