@@ -9,5 +9,5 @@ World atlas network connection visualizer.
       * Add more countries to the Atlas
    * New connections input as stream?
    * ~~Dark Mode~~
-   * Accurate Auto-Scrolling, currently scrolls but not to the bottom.
+   * ~~Accurate Auto-Scrolling, currently scrolls but not to the bottom.~~
    
