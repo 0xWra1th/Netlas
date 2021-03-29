@@ -98,7 +98,16 @@ def netCheck(ta, win, countries):
 			if ip[4] != () and ip[4][0] != "::1" and ip[4][0] != "127.0.0.1":
 				count+=1
 				curr = str(ip[4][0])
+
+				#Auto-Scroll
+				time.sleep(0.01)
+				ta.update()
+				scrollbar.update()
+				scrollbar.setValue(scrollbar.maximum())
 				time.sleep(1)
+				ta.update()
+				scrollbar.update()
+				scrollbar.setValue(scrollbar.maximum())
 
 				#RESET MARKERS
 				for c in countries:
@@ -152,7 +161,6 @@ def netCheck(ta, win, countries):
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
 							ta.append(text)
-						scrollbar.setValue(scrollbar.maximum())
 
 if __name__ == "__main__":
     main()
