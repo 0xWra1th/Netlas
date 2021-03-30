@@ -4,7 +4,6 @@
 import psutil as ps
 import time, requests, json, sys
 import threading
-from geoip import geolite2
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
