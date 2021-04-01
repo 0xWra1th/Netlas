@@ -82,8 +82,12 @@ def main():
 	IR.setVisible(False)
 	IR.move(0,-64)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR]
+	SG = QLabel(window)
+	SG.setPixmap(QPixmap('assets/SG.png'))
+	SG.setVisible(False)
+	SG.move(0,0)
 
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG]
 
 	window.show()
 
@@ -122,10 +126,6 @@ def netCheck(ta, win, countries):
 				ta.update()
 				scrollbar.update()
 				scrollbar.setValue(scrollbar.maximum())
-
-				#RESET MARKERS
-				#for c in countries:
-					#c.setVisible(False)
 
 				#USING API
 				response = requests.get("http://ip-api.com/json/"+str(curr)+"?fields=status,country,city,query")
@@ -192,9 +192,15 @@ def netCheck(ta, win, countries):
 							IRThread = threading.Thread(target=atlasLight, args=(countries[11],))
 							IRThread.start();
 							ta.append(text)
+						elif details["country"] == "Singapore":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							SGThread = threading.Thread(target=atlasLight, args=(countries[12],))
+							SGThread.start();
+							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
 							ta.append(text)
 
 if __name__ == "__main__":
     main()
+
