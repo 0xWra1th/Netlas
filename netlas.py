@@ -87,13 +87,17 @@ def main():
 	SG.setVisible(False)
 	SG.move(0,0)
 
-
 	IT = QLabel(window)
 	IT.setPixmap(QPixmap('assets/IT.png'))
 	IT.setVisible(False)
 	IT.move(0,0)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT]
+	IS = QLabel(window)
+	IS.setPixmap(QPixmap('assets/IS.png'))
+	IS.setVisible(False)
+	IS.move(0,0)
+
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS]
 
 	window.show()
 
@@ -205,8 +209,13 @@ def netCheck(ta, win, countries):
 							ta.append(text)
 						elif details["country"] == "Italy":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							ITThread = threading.Thread(target=atlasLight, args=(countries[12],))
+							ITThread = threading.Thread(target=atlasLight, args=(countries[13],))
 							ITThread.start();
+							ta.append(text)
+						elif details["country"] == "Iceland":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							ISThread = threading.Thread(target=atlasLight, args=(countries[14],))
+							ISThread.start();
 							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
