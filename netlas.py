@@ -102,7 +102,12 @@ def main():
 	NZ.setVisible(False)
 	NZ.move(0,0)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ]
+	PE = QLabel(window)
+	PE.setPixmap(QPixmap('assets/PE.png'))
+	PE.setVisible(False)
+	PE.move(0,0)
+
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ, PE]
 
 	window.show()
 
@@ -114,7 +119,7 @@ def main():
 
 def atlasLight(country):
 	country.setVisible(True)
-	time.sleep(2)
+	time.sleep(3)
 	country.setVisible(False)
 
 def netCheck(ta, win, countries):
@@ -224,8 +229,13 @@ def netCheck(ta, win, countries):
 							ta.append(text)
 						elif details["country"] == "New Zealand":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							NZThread = threading.Thread(target=atlasLight, args=(countries[14],))
+							NZThread = threading.Thread(target=atlasLight, args=(countries[15],))
 							NZThread.start();
+							ta.append(text)
+						elif details["country"] == "Peru":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							PEThread = threading.Thread(target=atlasLight, args=(countries[16],))
+							PEThread.start();
 							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
