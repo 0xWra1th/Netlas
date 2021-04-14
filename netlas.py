@@ -112,7 +112,12 @@ def main():
 	SE.setVisible(False)
 	SE.move(0,0)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ, PE, SE]
+	JP = QLabel(window)
+	JP.setPixmap(QPixmap('assets/JP.png'))
+	JP.setVisible(False)
+	JP.move(0,0)
+
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ, PE, SE, JP]
 
 	window.show()
 
@@ -246,6 +251,11 @@ def netCheck(ta, win, countries):
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
 							SEThread = threading.Thread(target=atlasLight, args=(countries[17],))
 							SEThread.start();
+							ta.append(text)
+						elif details["country"] == "Japan":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							JPThread = threading.Thread(target=atlasLight, args=(countries[18],))
+							JPThread.start();
 							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
