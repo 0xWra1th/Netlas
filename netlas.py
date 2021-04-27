@@ -118,11 +118,16 @@ def main():
 	JP.move(0,0)
 
 	IRAN = QLabel(window)
-	IRAN.setPixmap(QPixmap('assets/JP.png'))
+	IRAN.setPixmap(QPixmap('assets/IRAN.png'))
 	IRAN.setVisible(False)
 	IRAN.move(0,0)
 
-	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ, PE, SE, JP, IRAN]
+	MX = QLabel(window)
+	MX.setPixmap(QPixmap('assets/MX.png'))
+	MX.setVisible(False)
+	MX.move(0,0)
+
+	countries = [ZA, US, UK, FR, AU, BR, CA, CN, IN, RU, GR, IR, SG, IT, IS, NZ, PE, SE, JP, IRAN, MX]
 
 	window.show()
 
@@ -264,8 +269,13 @@ def netCheck(ta, win, countries):
 							ta.append(text)
 						elif details["country"] == "Iran":
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
-							IRANThread = threading.Thread(target=atlasLight, args=(countries[18],))
+							IRANThread = threading.Thread(target=atlasLight, args=(countries[19],))
 							IRANThread.start();
+							ta.append(text)
+						elif details["country"] == "Mexico":
+							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
+							MXThread = threading.Thread(target=atlasLight, args=(countries[20],))
+							MXThread.start();
 							ta.append(text)
 						else:
 							text = "<span style=\" font-size:11pt; font-weight:200; color:white;\" >"+details["country"]+", "+details["city"]+" - "+str(curr)+" : "+str(ip[4][1])+"</span>"
