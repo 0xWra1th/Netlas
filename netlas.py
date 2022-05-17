@@ -1,5 +1,5 @@
 #Network Connection IP LookUp
-#Author: 0xWraith
+#Author: Scragg
 #Date: 24/03/2021
 import psutil as ps
 import time, requests, json, sys
